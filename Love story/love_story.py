@@ -27,15 +27,15 @@ def isSumInArray(array, expected_amount):
             return True
 
     else:
-        w = len(temp_array) #--кол-во элементов множества
+        w = len(temp_array)
         n = 2**w
 
-        for i in range(0,n): #--перебор битовых маск
+        for i in range(0,n):
             subarray = []
 
-            for j in range(0,w): #--перебор битов в маске
-                if ( i & (1<<j)): #--если j-й бит установлен
-                    subarray.append(temp_array[j]) #--то выводим j-й элемент множества
+            for j in range(0,w):
+                if ( i & (1<<j)): 
+                    subarray.append(temp_array[j])
 
             if len(subarray) == 3:
                 result_sum = 0
