@@ -1,4 +1,6 @@
 from collections import namedtuple, deque
+import unittest
+import os
 
 inf = float('inf')
 Edge = namedtuple('Edge', ['start', 'end', 'cost'])
@@ -14,6 +16,7 @@ class Graph():
         dist = {vertex: inf for vertex in self.vertices}
         previous = {vertex: None for vertex in self.vertices}
         dist[source] = 0
+
         q = self.vertices.copy()
         neighbours = {vertex: set() for vertex in self.vertices}
         for start, end, cost in self.edges:
@@ -35,14 +38,24 @@ class Graph():
         s.appendleft(u)
         return s
 
-mArray = []
-data = open("data.txt","r")
-contents = data.readlines()
-for x in contents:
-    res = [int(i) for i in x.split() if i.isdigit()]
-    mArray.append(res)
-data.close()
+class TestStringMethods(unittest.TestCase):
 
-graph = Graph(mArray)
+    def test_true(self):
+        mArray = []
 
-print graph.dijkstra(5, 100)
+        data = open("data.txt","r")
+        contents = data.readlines()
+        for x in contents:
+            res = [int(i) for i in x.split() if i.isdigit()]
+            mArray.append(res)
+        data.close()
+
+        graph = Graph(mArray)
+
+        self.assertEqual(graph.dijkstra(5, 100),  deque([5, 32, 27, 196, 118, 46, 178, 158, 150, 2, 47, 7, 100]))
+
+    def test_file(self):
+        assert os.path.exists("data.txt") == 1
+
+if __name__ == '__main__':
+    unittest.main()
