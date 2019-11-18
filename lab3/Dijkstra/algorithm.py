@@ -22,11 +22,14 @@ class Graph():
         for start, end, cost in self.edges:
             neighbours[start].add((end, cost))
 
-        while q:
+        while q: #V
             u = min(q, key=lambda vertex: dist[vertex])
             q.remove(u)
 
-            for v, cost in neighbours[u]:
+            if dist[u] == inf or u == dest:
+                break
+
+            for v, cost in neighbours[u]: #E
                 if dist[u] + cost < dist[v]:  # Relax (u,v,a)
                     dist[v] = dist[u] + cost
                     previous[v] = u
