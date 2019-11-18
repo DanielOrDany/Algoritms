@@ -1,21 +1,22 @@
-
+import unittest
+import filecmp
+import os
 from collections import defaultdict
 
 
 class Graph:
-    def __init__(self, vertices):
+    def __init__(self):
         self.edges = defaultdict(list)
         self.docs = []
-        self.v = vertices
         self.root = 0
 
-    def add_edge(self, doc_from, doc_to):
-        self.edges[doc_from].append(doc_to)
-        self.edges[doc_to] = self.edges[doc_to]
-        if doc_from not in self.docs:
-            self.docs.append(doc_from)
-        if doc_to not in self.docs:
-            self.docs.append(doc_to)
+    def add_edge(self, v, e):
+        self.edges[v].append(e)
+        self.edges[e] = self.edges[e]
+        if v not in self.docs:
+            self.docs.append(v)
+        if e not in self.docs:
+            self.docs.append(e)
 
     def visit_document(self, v, visited, sort_list):
         visited[v] = True
@@ -39,8 +40,8 @@ class Graph:
         return sort_list
 
     def is_cyclic(self):
-        visited = [False] * self.v
-        rec_stack = [False] * self.v
+        visited = [False] * len(self.docs)
+        rec_stack = [False] * len(self.docs)
 
         for node in self.docs:
             if not visited[self.docs.index(node)]:
@@ -61,8 +62,16 @@ class Graph:
         return False
 
 
+class TestStringMethods(unittest.TestCase):
+
+    def test_file_ex(self):
+        self.assertEqual(os.path.exists('./govern.out'), True)
+
+    def test_file_ex(self):
+        self.assertEqual(filecmp.cmp('govern.out', 'right.out'), True)
+
 if __name__ == '__main__':
-    g = Graph(8)
+    g = Graph()
     data = open("govern.in", "r")
     contents = data.readlines()
 
@@ -74,4 +83,6 @@ if __name__ == '__main__':
     for item in g.find_order():
         f.write(item + "\n")
     f.close()
+
+    unittest.main()
 
