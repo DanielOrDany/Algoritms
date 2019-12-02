@@ -11,12 +11,12 @@ def write_result(root, file_in, file_out):
     contents = input_data.readlines()
 
     for word in contents:
-        graph.input_words.append(word.rstrip())
+        if len(root) >= len(word.rstrip()):
+            graph.input_words.append(word.rstrip())
 
     sorted_list = sorted(graph.input_words, key=len, reverse=True)
-    #print sorted_list
+
     graph.input_words = sorted_list
-    #root = sorted_list[0]
     graph.find_max_words(root)
 
     result_file = open(file_out, "w+")
