@@ -58,7 +58,7 @@ class Graph:
         return stack
 
 
-class TestStringMethods(unittest.TestCase):
+class SortTest(unittest.TestCase):
     def test_file_exist(self):
         self.assertEqual(os.path.exists('./govern.out'), True)
 
@@ -67,12 +67,12 @@ class TestStringMethods(unittest.TestCase):
 
 
 if __name__ == '__main__':
-    g = Graph()
+    graph = Graph()
 
     documents = {}
 
-    data = open("govern.in", "r")
-    contents = data.readlines()
+    input_data = open("govern.in", "r")
+    contents = input_data.readlines()
 
     number = 0
     for document in contents:
@@ -90,16 +90,16 @@ if __name__ == '__main__':
     for document in contents:
         res = [i for i in document.split()]
         print str(documents[res[0]]) + ": " + str(res[0]) + " | " + str(documents[res[1]]) + ": " + str(res[1])
-        g.add_edge(documents[res[1]], documents[res[0]])
+        graph.add_edge(documents[res[1]], documents[res[0]])
 
-    f = open("govern.out", "w+")
+    result_file = open("govern.out", "w+")
 
-    for g_ed in g.sort_documents():
+    for g_ed in graph.sort_documents():
         for v, ed in documents.items():
             if ed == g_ed:
-                f.write(v + "\n") #\n after last item, done!
+                result_file.write(v + "\n") #\n after last item, done!
 
-    f.close()
-    data.close()
+    result_file.close()
+    input_data.close()
 
     unittest.main()
